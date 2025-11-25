@@ -1,0 +1,33 @@
+{
+  "name": "agibank-e2e-tests",
+  "version": "1.0.0",
+  "description": "E2E tests for Agibank blog using Playwright and TypeScript",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report",
+    "test:codegen": "playwright codegen https://blog.agibank.com.br/",
+    "test:chromium": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:webkit": "playwright test --project=webkit",
+    "docker:build": "docker build -t agibank-e2e-tests:latest .",
+    "docker:test": "docker-compose run --rm playwright-tests",
+    "docker:test:chromium": "docker-compose run --rm -e TEST_PROJECT=chromium playwright-tests npm run test:chromium",
+    "docker:shell": "docker-compose run --rm playwright-tests /bin/bash"
+  },
+  "keywords": [
+    "playwright",
+    "e2e",
+    "testing",
+    "typescript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.3"
+  }
+}
