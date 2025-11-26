@@ -79,12 +79,35 @@ jobs:
           cache-to: type=gha,mode=max
           platforms: linux/amd64
 
-      - name: Run tests in Docker
+      - name: Run tests in Docker (all browsers)
         run: |
-          docker run --rm \
-            -v ${{ github.workspace }}/test-results:/app/test-results \
-            -v ${{ github.workspace }}/playwright-report:/app/playwright-report \
-            agibank-e2e-tests:latest npm run test:chromium
+          # Create directories for results
+          mkdir -p test-results playwright-report
+          
+          # Track results
+          FAILED_BROWSERS=""
+          
+          # Run tests for each browser
+          for browser in chromium firefox webkit; do
+            echo "🧪 Running tests on $browser..."
+            if docker run --rm \
+              -v ${{ github.workspace }}/test-results:/app/test-results \
+              -v ${{ github.workspace }}/playwright-report:/app/playwright-report \
+              agibank-e2e-tests:latest npm run test:$browser; then
+              echo "✅ Tests passed for $browser"
+            else
+              echo "❌ Tests failed for $browser"
+              FAILED_BROWSERS="$FAILED_BROWSERS $browser"
+            fi
+          done
+          
+          # Report final status
+          if [ -n "$FAILED_BROWSERS" ]; then
+            echo "⚠️ Some browsers failed: $FAILED_BROWSERS"
+            exit 1
+          else
+            echo "✅ All browsers passed!"
+          fi
 
       - name: Upload Docker test results
         if: always()
