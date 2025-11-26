@@ -5,7 +5,7 @@ Este diretório contém informações sobre a configuração Docker do projeto.
 ## Imagem Base
 
 A imagem Docker utiliza a imagem oficial do Playwright da Microsoft:
-- `mcr.microsoft.com/playwright:v1.40.0-focal`
+- `mcr.microsoft.com/playwright:v1.57.0`
 
 Esta imagem já inclui:
 - Node.js
@@ -16,6 +16,25 @@ Esta imagem já inclui:
 
 ```bash
 docker build -t agibank-e2e-tests:latest .
+```
+
+### Rebuild da Imagem
+
+Para reconstruir a imagem Docker, você pode usar os seguintes comandos:
+
+**Rebuild simples (usa cache quando possível):**
+```bash
+docker build -t agibank-e2e-tests:latest .
+```
+
+**Rebuild completo (sem cache, mais lento mas garante tudo novo):**
+```bash
+docker build --no-cache -t agibank-e2e-tests:latest .
+```
+
+**Usando docker-compose:**
+```bash
+docker-compose build --no-cache
 ```
 
 ## Execução
