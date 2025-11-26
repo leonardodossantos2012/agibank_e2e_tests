@@ -1,7 +1,3 @@
-#!/bin/bash
-
-# Script helper para executar testes no Docker
-# Uso: ./scripts/docker-run.sh [browser]
 
 set -e
 

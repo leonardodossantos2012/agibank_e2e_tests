@@ -8,14 +8,11 @@ services:
     image: agibank-e2e-tests:latest
     container_name: agibank-e2e-tests
     volumes:
-      # Mount test results to host
       - ./test-results:/app/test-results
       - ./playwright-report:/app/playwright-report
     environment:
       - CI=true
       - NODE_ENV=test
-    # Override command if needed
-    # command: npm run test:chromium
     networks:
       - test-network
 
